@@ -28,13 +28,11 @@ def prediction_upload(request):
         if serializer.is_valid():
             prediction = serializer.save()
             uploaded_images = prediction.images.all()
-            # print(uploaded_images)
-            img_urls = []
+            img_responses = []
             for img in uploaded_images:
-                img_urls.append(ml.display_img(img))
-            # custom_message = "Data, Success"
+                img_responses.append(ml.img_response(img))
             return Response(
-                {"message": img_urls, "data": serializer.data},
+                {"message": img_responses, "data": serializer.data},
                 status=status.HTTP_201_CREATED,
             )
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
